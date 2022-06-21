@@ -57,22 +57,28 @@ jobs:
           platform_version: 2019
           boost_install_dir: "C:/Softwares"
           toolset: msvc
-      - name: Download armadillo
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-      - name: Extract armadillo
-        shell: bash
-        run: |
-          tar -xf armadillo-10.8.2.tar.xz
+      # - name: Download armadillo
+      #   shell: powershell
+      #   run: |
+      #     Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+      # - name: Extract armadillo
+      #   shell: bash
+      #   run: |
+      #     tar -xf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         id: install-armadillo
         run: |
           # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
+
+          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+          7z x armadillo-10.8.2.tar.xz
+          tar -xf armadillo-10.8.2.tar
+
           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
           cmake --install build_armadillo
+
           echo "::set-output name=prefix::${prefix_}"
         shell: powershell
       - uses: actions/checkout@v2
