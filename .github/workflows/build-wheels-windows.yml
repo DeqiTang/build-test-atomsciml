@@ -29,7 +29,7 @@ jobs:
       - name: Install libtorch
         id: install-libtorch
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           vcpkg install libtorch:x64-windows --binarysource=default,readwrite
           $prefix_ = "${env:VCPKG_INSTALLATION_ROOT}/packages/libtorch_x64-windows"
 
