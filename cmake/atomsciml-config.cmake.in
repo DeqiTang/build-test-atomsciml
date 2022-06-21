@@ -1,0 +1,7 @@
+get_filename_component(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(${SELF_DIR}/atomsciml.cmake)
+
+#set(ATOMSCIML_INCLUDE_DIR @CMAKE_INSTALL_FULL_INCLUDEDIR@)
+set(ATOMSCIML_INCLUDE_DIR ${SELF_DIR}/../../../include)
+
+set(ATOMSCIML_LIBRARIES ${SELF_DIR}/../../../lib/libatomsciml.a)
