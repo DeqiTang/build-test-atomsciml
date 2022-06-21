@@ -42,6 +42,7 @@ jobs:
           # the default clang/clang++ in macos doen't support -fopenmp
           # we installed llvm using brew before, and set to use them here
           # to support openmp 
+
           # CC: "/usr/local/opt/llvm/bin/clang" 
           # CXX: "/usr/local/opt/llvm/bin/clang++"
       - uses: actions/upload-artifact@v2
