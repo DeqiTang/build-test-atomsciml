@@ -34,8 +34,8 @@ find_package(Armadillo REQUIRED)
 include_directories(${ARMADILLO_INCLUDE_DIRS})
 link_libraries(${ARMADILLO_LIBRARIES})
 
-find_package(LAPACK REQUIRED)
-find_package(BLAS REQUIRED)
+# find_package(LAPACK REQUIRED)
+# find_package(BLAS REQUIRED)
 
 find_package(Torch REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")

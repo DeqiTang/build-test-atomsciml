@@ -42,11 +42,17 @@ jobs:
           $prefix_ = "C:/Softwares/libtorch"
           
           echo "::set-output name=prefix::${prefix_}"
-      - name: Set up Visual Studio 2019 community version
-        run: |
-          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-        shell: powershell
+      # - name: Caching MSVC Community Version
+      #   id: cache-msvc-community
+      #   uses: actions/cache@v3  
+      #   with:
+      #     path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+      #     key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
+      # - name: Set up Visual Studio 2019 community version
+      #   run: |
+      #     choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+      #     & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+      #   shell: powershell
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python_version }}
@@ -73,7 +79,7 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
@@ -85,7 +91,7 @@ jobs:
           fetch-depth: 1
       - name: Build atomsciml
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           # $env:ATOMSCIML_BUILD_PY_EXT_NO_FORTRAN = "true"
           python -m pip install scikit-build cython pybind11[global]
           python setup.py build bdist_wheel -G "Visual Studio 16 2019"
