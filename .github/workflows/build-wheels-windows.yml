@@ -1,0 +1,97 @@
+# =======================================================================================
+# Visual Studio Community version is friendly to open source projects.
+# The eula indicates it can be used for the development of open source softwares.
+# Even the Official CPython package for Windows is built using Visual Studio.
+# So here, Visual Studio Community version is used to build and test atomsciflow wheels.
+# =======================================================================================
+name: Build and test wheels for Windows using MSVC community version
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ master ]
+jobs:
+  build-for-windows:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2019]
+        python_version: ["3.8", "3.9", "3.10"]
+    steps:
+      - name: Caching vcpkg binary caches
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
+          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.16-version-1
+      - name: Install libtorch
+        id: install-libtorch
+        run: |
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          vcpkg install libtorch:x64-windows --binarysource=default,readwrite
+          $prefix_ = "${env:VCPKG_INSTALLATION_ROOT}/packages/libtorch_x64-windows"
+
+          echo "::set-output name=prefix::${prefix_}"
+      - name: Set up Visual Studio 2019 community version
+        run: |
+          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+        shell: powershell
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Install ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+        with:
+          destination: "C:/Softwares/ninja"          
+      - name: Install Boost
+        id: install-boost
+        uses: MarkusJx/install-boost@v2.2.0
+        with:
+          boost_version: 1.78.0
+          platform_version: 2019
+          boost_install_dir: "C:/Softwares"
+          toolset: msvc
+      - name: Download armadillo
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+      - name: Extract armadillo
+        shell: bash
+        run: |
+          tar -xf armadillo-10.8.2.tar.xz
+      - name: Install armadillo
+        id: install-armadillo
+        run: |
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          $prefix_ = "C:/Softwares/armadillo"
+          cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
+          cmake --build build_armadillo --config Release
+          cmake --install build_armadillo
+          echo "::set-output name=prefix::${prefix_}"
+        shell: powershell
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Build atomsciml
+        run: |
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          # $env:ATOMSCIML_BUILD_PY_EXT_NO_FORTRAN = "true"
+          python -m pip install scikit-build cython pybind11[global]
+          python setup.py build bdist_wheel -G "Visual Studio 16 2019"
+          cd dist
+          $atomsciml_whl = $(Get-ChildItem ./)
+          pip install ${atomsciml_whl}
+          python -c "from atomsciml.cpp.utils import version; print(version())"
+          python -c "from atomsciml.cpp.cmd import log_cmd_start; print(log_cmd_start('atomsciml'))"
+        env:
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+          # passing cmake arguments to scikit-build when dealing with cmake, use SKBUILD_CONFIGURE_OPTIONS or CMAKE_ARGS env
+          SKBUILD_CONFIGURE_OPTIONS: "-DCMAKE_PREFIX_PATH=\"${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libtorch.outputs.prefix }}\""
+        shell: powershell
+      - uses: actions/upload-artifact@v2
+        with:
+          name: windows-wheels
+          path: dist/*.whl
