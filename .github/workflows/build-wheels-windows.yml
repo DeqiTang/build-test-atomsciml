@@ -28,6 +28,7 @@ jobs:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
           key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
       - name: Set up Visual Studio 2019 community version
+        if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
           choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
