@@ -20,17 +20,17 @@ jobs:
         os: [windows-2019]
         python_version: ["3.8", "3.9", "3.10"]
     steps:
-      # - name: Caching MSVC Community Version
-      #   id: cache-msvc-community
-      #   uses: actions/cache@v3  
-      #   with:
-      #     path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
-      #     key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
-      # - name: Set up Visual Studio 2019 community version
-      #   run: |
-      #     choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-      #     & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-      #   shell: powershell
+      - name: Caching MSVC Community Version
+        id: cache-msvc-community
+        uses: actions/cache@v3  
+        with:
+          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+          key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
+      - name: Set up Visual Studio 2019 community version
+        run: |
+          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+        shell: powershell
       - name: Install libtorch
         id: install-libtorch
         run: |
@@ -57,14 +57,6 @@ jobs:
           platform_version: 2019
           boost_install_dir: "C:/Softwares"
           toolset: msvc
-      # - name: Download armadillo
-      #   shell: powershell
-      #   run: |
-      #     Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-      # - name: Extract armadillo
-      #   shell: bash
-      #   run: |
-      #     tar -xf armadillo-10.8.2.tar.xz
       - name: Install armadillo
         id: install-armadillo
         run: |
