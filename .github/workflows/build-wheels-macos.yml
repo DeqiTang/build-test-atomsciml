@@ -38,12 +38,12 @@ jobs:
         env:
           # passing cmake arguments to scikit-build when dealing with cmake, using either SKBUILD_CONFIGURE_OPTIONS or CMAKE_ARGS env
           # SKBUILD_CONFIGURE_OPTIONS: "-DOPENSSL_ROOT_DIR=${{steps.install-using-brew.outputs.openssl_3_prefix}}"
-          #CMAKE_ARGS: "-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3"
+          # CMAKE_ARGS: "-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3"
           # the default clang/clang++ in macos doen't support -fopenmp
           # we installed llvm using brew before, and set to use them here
           # to support openmp 
-          CC: "/usr/local/opt/llvm/bin/clang" 
-          CXX: "/usr/local/opt/llvm/bin/clang++"
+          # CC: "/usr/local/opt/llvm/bin/clang" 
+          # CXX: "/usr/local/opt/llvm/bin/clang++"
       - uses: actions/upload-artifact@v2
         with:
           name: macos-wheels
