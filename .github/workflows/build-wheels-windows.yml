@@ -60,7 +60,7 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
 
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
@@ -78,7 +78,7 @@ jobs:
           fetch-depth: 1
       - name: Build atomsciml
         run: |
-          # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           python -m pip install scikit-build cython pybind11[global]
           python setup.py build bdist_wheel -G "Visual Studio 16 2019"
           cd dist
