@@ -99,7 +99,6 @@ jobs:
           $atomsciml_whl = $(Get-ChildItem ./)
           pip install ${atomsciml_whl}
           python -c "from atomsciml.cpp.utils import version; print(version())"
-          python -c "from atomsciml.cpp.cmd import log_cmd_start; print(log_cmd_start('atomsciml'))"
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
           # passing cmake arguments to scikit-build when dealing with cmake, use SKBUILD_CONFIGURE_OPTIONS or CMAKE_ARGS env
