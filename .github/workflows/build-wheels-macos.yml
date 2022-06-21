@@ -35,7 +35,7 @@ jobs:
           export LDFLAGS=-L$(brew --cellar gcc@11)/$(brew list --versions gcc@12 | tr ' ' '\n' | tail -n 1)/lib/gcc/12
           python -m pip install scikit-build cython pybind11[global]
           python setup.py build bdist_wheel -j 4
-        env:
+        # env:
           # passing cmake arguments to scikit-build when dealing with cmake, using either SKBUILD_CONFIGURE_OPTIONS or CMAKE_ARGS env
           # SKBUILD_CONFIGURE_OPTIONS: "-DOPENSSL_ROOT_DIR=${{steps.install-using-brew.outputs.openssl_3_prefix}}"
           # CMAKE_ARGS: "-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3"
