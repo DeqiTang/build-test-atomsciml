@@ -38,7 +38,8 @@ jobs:
           cd C:/Softwares
           unzip libtorch-shared-with-deps-latest.zip
           cd $env:GITHUB_WORKSPACE
-          $prefix_ = "C:/Softwares/libtorch-shared-with-deps-latest"
+          # $prefix_ = "C:/Softwares/libtorch-shared-with-deps-latest"
+          $prefix_ = "C:/Softwares/libtorch"
           
           echo "::set-output name=prefix::${prefix_}"
       - name: Set up Visual Studio 2019 community version
