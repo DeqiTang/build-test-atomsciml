@@ -18,7 +18,7 @@ jobs:
         id: install-using-brew
         run: |
           brew install llvm
-          brew install gcc@11
+          brew install gcc@12
           brew install libomp # for openmp support
           brew install boost
           brew install armadillo
@@ -32,7 +32,7 @@ jobs:
       - name: build atomsciflow
         run: |
           # export PKG_CONFIG_PATH="$(brew --prefix openssl@3)/lib/pkgconfig"
-          export LDFLAGS=-L$(brew --cellar gcc@11)/$(brew list --versions gcc@11 | tr ' ' '\n' | tail -n 1)/lib/gcc/11
+          export LDFLAGS=-L$(brew --cellar gcc@11)/$(brew list --versions gcc@12 | tr ' ' '\n' | tail -n 1)/lib/gcc/12
           python -m pip install scikit-build cython pybind11[global]
           python setup.py build bdist_wheel -j 4
         env:
