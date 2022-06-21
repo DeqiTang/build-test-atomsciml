@@ -25,14 +25,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: C:\Users\runneradmin\AppData\Local\vcpkg\archives
-          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.16-version-1
+          key: ${{ runner.os }}-cache-vcpkg-on-2022.06.21-version-1
       - name: Install libtorch
         id: install-libtorch
         run: |
           # & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
-          vcpkg install libtorch:x64-windows --binarysource=default,readwrite
-          $prefix_ = "${env:VCPKG_INSTALLATION_ROOT}/packages/libtorch_x64-windows"
+          # vcpkg install libtorch:x64-windows --binarysource=default,readwrite
+          # $prefix_ = "${env:VCPKG_INSTALLATION_ROOT}/packages/libtorch_x64-windows"
 
+          New-Item -Path C:/Softwares -ItemType Directory
+          Invoke-WebRequest -Uri https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-with-deps-latest.zip -OutFile C:/Softwares/libtorch-shared-with-deps-latest.zip
+          cd C:/Softwares
+          unzip libtorch-shared-with-deps-latest.zip
+          cd $env:GITHUB_WORKSPACE
+          $prefix_ = "C:/Softwares/libtorch-shared-with-deps-latest"
+          
           echo "::set-output name=prefix::${prefix_}"
       - name: Set up Visual Studio 2019 community version
         run: |
