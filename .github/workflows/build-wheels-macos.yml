@@ -29,9 +29,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: build atomsciflow
+      - name: Build atomsciml
         run: |
-          # export PKG_CONFIG_PATH="$(brew --prefix openssl@3)/lib/pkgconfig"
           export LDFLAGS=-L$(brew --cellar gcc@11)/$(brew list --versions gcc@12 | tr ' ' '\n' | tail -n 1)/lib/gcc/12
           python -m pip install scikit-build cython pybind11[global]
           python setup.py build bdist_wheel -j 4
@@ -41,8 +40,7 @@ jobs:
           # CMAKE_ARGS: "-DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@3"
           # the default clang/clang++ in macos doen't support -fopenmp
           # we installed llvm using brew before, and set to use them here
-          # to support openmp 
-
+          # to support openmp
           # CC: "/usr/local/opt/llvm/bin/clang" 
           # CXX: "/usr/local/opt/llvm/bin/clang++"
       - uses: actions/upload-artifact@v2
