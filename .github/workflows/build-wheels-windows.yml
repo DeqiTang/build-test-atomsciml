@@ -1,9 +1,6 @@
 # =======================================================================================
-# Visual Studio Community version is friendly to open source projects.
-# The eula indicates it can be used for the development of open source softwares.
-# Even the Official CPython package for Windows is built using Visual Studio.
-# So here, Visual Studio Community version is used to build and test atomsciml wheels.
-#
+# Atomsciml wheels are built and tested using Visual Studuio Community version on Windows.
+# The eula of Visual Studio Community version is friendly to open source projects.
 # =======================================================================================
 name: Build and test wheels for Windows using MSVC community version
 on:
@@ -27,12 +24,15 @@ jobs:
         with:
           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
           key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
-      - name: Set up Visual Studio 2019 community version
+      - name: Set up Visual Studio community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
           choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
         shell: powershell
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python_version }}        
       - name: Install libtorch
         id: install-libtorch
         run: |
@@ -41,12 +41,10 @@ jobs:
           cd C:/Softwares
           unzip libtorch-shared-with-deps-latest.zip
           cd $env:GITHUB_WORKSPACE
+
           $prefix_ = "C:/Softwares/libtorch"
           
           echo "::set-output name=prefix::${prefix_}"
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python_version }}
       - name: Install ninja
         uses: seanmiddleditch/gha-setup-ninja@master
         with:
@@ -82,7 +80,7 @@ jobs:
         run: |
           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
           python -m pip install scikit-build cython pybind11[global]
-          python setup.py build bdist_wheel -G "Visual Studio 16 2019"
+          python setup.py build bdist_wheel -G "Visual Studio 16 2019" --parallel 4
           cd dist
           $atomsciml_whl = $(Get-ChildItem ./)
           pip install ${atomsciml_whl}
