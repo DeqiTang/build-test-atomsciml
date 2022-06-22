@@ -1,3 +1,99 @@
+# # =======================================================================================
+# # Atomsciml wheels are built and tested using Visual Studuio Community version on Windows.
+# # The eula of Visual Studio Community version is friendly to open source projects.
+# # =======================================================================================
+# name: Build and test wheels for Windows using MSVC community version
+# on:
+#   push:
+#     branches: [ master ]
+#     tags:
+#       - 'v*'
+#   pull_request:
+#     branches: [ master ]
+# jobs:
+#   build-for-windows:
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       matrix:
+#         os: [windows-2019]
+#         python_version: ["3.8", "3.9", "3.10"]
+#     steps:
+#       - name: Caching MSVC Community Version
+#         id: cache-msvc-community
+#         uses: actions/cache@v3  
+#         with:
+#           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+#           key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
+#       - name: Set up Visual Studio community version
+#         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
+#         run: |
+#           choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
+#           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+#         shell: powershell
+#       - uses: actions/setup-python@v2
+#         with:
+#           python-version: ${{ matrix.python_version }}        
+#       - name: Install libtorch
+#         id: install-libtorch
+#         run: |
+#           New-Item -Path C:/Softwares -ItemType Directory
+#           Invoke-WebRequest -Uri https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-with-deps-latest.zip -OutFile C:/Softwares/libtorch-shared-with-deps-latest.zip
+#           cd C:/Softwares
+#           unzip libtorch-shared-with-deps-latest.zip
+#           cd $env:GITHUB_WORKSPACE
+
+#           $prefix_ = "C:/Softwares/libtorch"
+          
+#           echo "::set-output name=prefix::${prefix_}"
+#       - name: Install ninja
+#         uses: seanmiddleditch/gha-setup-ninja@master
+#         with:
+#           destination: "C:/Softwares/ninja"          
+#       - name: Install Boost
+#         id: install-boost
+#         uses: MarkusJx/install-boost@v2.2.0
+#         with:
+#           boost_version: 1.78.0
+#           platform_version: 2019
+#           boost_install_dir: "C:/Softwares"
+#           toolset: msvc
+#       - name: Install armadillo
+#         id: install-armadillo
+#         run: |
+#           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+#           $prefix_ = "C:/Softwares/armadillo"
+
+#           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
+#           7z x armadillo-10.8.2.tar.xz
+#           tar -xf armadillo-10.8.2.tar
+
+#           cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
+#           cmake --build build_armadillo --config Release
+#           cmake --install build_armadillo
+
+#           echo "::set-output name=prefix::${prefix_}"
+#         shell: powershell
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 1
+#       - name: Build atomsciml
+#         run: |
+#           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+#           python -m pip install scikit-build cython pybind11[global]
+#           python setup.py build bdist_wheel -G "Visual Studio 17 2022"
+#           cd dist
+#           $atomsciml_whl = $(Get-ChildItem ./)
+#           pip install ${atomsciml_whl}
+#           python -c "from atomsciml.cpp.utils import version; print(version())"
+#         env:
+#           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+#           SKBUILD_CONFIGURE_OPTIONS: "-DCMAKE_PREFIX_PATH=\"${{ steps.install-armadillo.outputs.prefix }};${{ steps.install-libtorch.outputs.prefix }}\""
+#         shell: powershell
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: windows-wheels
+#           path: dist/*.whl
+
 # =======================================================================================
 # Atomsciml wheels are built and tested using Visual Studuio Community version on Windows.
 # The eula of Visual Studio Community version is friendly to open source projects.
@@ -15,20 +111,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2019]
+        os: [windows-2022]
         python_version: ["3.8", "3.9", "3.10"]
     steps:
       - name: Caching MSVC Community Version
         id: cache-msvc-community
         uses: actions/cache@v3  
         with:
-          path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+          path: "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community"
           key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
       - name: Set up Visual Studio community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
-          choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          choco install visualstudio2022community --package-parameters "--allWorkloads --includeRecommended --passive"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
         shell: powershell
       - uses: actions/setup-python@v2
         with:
@@ -60,14 +156,14 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
 
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
           7z x armadillo-10.8.2.tar.xz
           tar -xf armadillo-10.8.2.tar
 
-          cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
+          cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
           cmake --install build_armadillo
 
@@ -78,9 +174,9 @@ jobs:
           fetch-depth: 1
       - name: Build atomsciml
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
           python -m pip install scikit-build cython pybind11[global]
-          python setup.py build bdist_wheel -G "Visual Studio 16 2019"
+          python setup.py build bdist_wheel -G "Visual Studio 17 2022"
           cd dist
           $atomsciml_whl = $(Get-ChildItem ./)
           pip install ${atomsciml_whl}
