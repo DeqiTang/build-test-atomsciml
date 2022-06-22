@@ -29,12 +29,12 @@ apt install -y openssl libssl-dev
 }
 
 function start_build() {
-# export PATH=$PATH:${HOME}/.local/bin
+export PATH=$PATH:${HOME}/.local/bin
 local PARALLEL_NUM=$1
 for py in cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
 do
-# /opt/python/${py}/bin/pip3 install --user scikit-build cython pybind11[global]
-/opt/python/${py}/bin/pip3 install scikit-build cython pybind11[global]
+/opt/python/${py}/bin/pip3 install --user scikit-build cython pybind11[global]
+# /opt/python/${py}/bin/pip3 install scikit-build cython pybind11[global]
 done
 
 cd /root/atomsciml/
