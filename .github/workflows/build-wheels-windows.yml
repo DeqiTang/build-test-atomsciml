@@ -22,13 +22,13 @@
 #         id: cache-msvc-community
 #         uses: actions/cache@v3  
 #         with:
-#           path: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+#           path: "C:/Program Files/Microsoft Visual Studio/2019/Community"
 #           key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
 #       - name: Set up Visual Studio community version
 #         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
 #         run: |
 #           choco install visualstudio2019community --package-parameters "--allWorkloads --includeRecommended --passive"
-#           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+#           & "C:/Program Files/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 #         shell: powershell
 #       - uses: actions/setup-python@v2
 #         with:
@@ -60,7 +60,7 @@
 #       - name: Install armadillo
 #         id: install-armadillo
 #         run: |
-#           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+#           & "C:/Program Files/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 #           $prefix_ = "C:/Softwares/armadillo"
 
 #           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
@@ -78,7 +78,7 @@
 #           fetch-depth: 1
 #       - name: Build atomsciml
 #         run: |
-#           & "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
+#           & "C:/Program Files/Microsoft Visual Studio/2019/Community/VC/Auxiliary/Build/vcvars64.bat"
 #           python -m pip install scikit-build cython pybind11[global]
 #           python setup.py build bdist_wheel -G "Visual Studio 17 2022"
 #           cd dist
@@ -118,16 +118,16 @@ jobs:
         id: cache-msvc-community
         uses: actions/cache@v3  
         with:
-          path: "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community"
+          path: "C:/Program Files/Microsoft Visual Studio/2022/Community"
           key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
       - name: Set up Visual Studio community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
           choco install visualstudio2022community --package-parameters "--allWorkloads --includeRecommended --passive"
-          ls "C:/Program Files (x86)/Microsoft Visual Studio"
-          ls "C:/Program Files (x86)/Microsoft Visual Studio/2022"
+          ls "C:/Program Files/Microsoft Visual Studio"
+          ls "C:/Program Files/Microsoft Visual Studio/2022"
           
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
         shell: powershell
       - uses: actions/setup-python@v2
         with:
@@ -159,7 +159,7 @@ jobs:
       - name: Install armadillo
         id: install-armadillo
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
 
           Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
@@ -177,7 +177,7 @@ jobs:
           fetch-depth: 1
       - name: Build atomsciml
         run: |
-          & "C:/Program Files (x86)/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
+          & "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
           python -m pip install scikit-build cython pybind11[global]
           python setup.py build bdist_wheel -G "Visual Studio 17 2022"
           cd dist
