@@ -8,9 +8,6 @@ yum install -y armadillo-devel
 yum install -y atlas-devel blas lapack  # needed for python3.10 to build scipy
 yum install -y yaml-cpp-devel openssl-devel libssh2-devel
 
-# pip install --user scikit-build cython pybind11[global]
-export PATH=$PATH:${HOME}/.local/bin
-
 # the boost-devel in centos 7 is too old
 yum install -y wget xz
 wget -c https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
@@ -21,10 +18,12 @@ cd boost_1_78_0
 }
 
 function start_build() {
+# export PATH=$PATH:${HOME}/.local/bin
 local PARALLEL_NUM=$1
 for py in cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
 do
-/opt/python/${py}/bin/pip install --user scikit-build cython pybind11[global]
+# /opt/python/${py}/bin/pip install --user scikit-build cython pybind11[global]
+/opt/python/${py}/bin/pip install scikit-build cython pybind11[global]
 done
 
 cd /root/atomsciml/
