@@ -27,22 +27,22 @@ class CleanCommand(Command):
         os.system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
         os.system("rm -rf _skbuild")
 
-# -----------------------------
-# make sure pybind11 is working
-# -----------------------------
-try:
-    import pybind11
-    # if there is a pybind11 directory locally in this project, it can be imported.
-    # but that's not the pybind11 package we want
-    # so check pybind11 package validity further
-    if os.path.exists("pybind11"):
-        # see if the truly pybind11 package is installed
-        os.environ["PATH"] = os.environ["PATH"] + ":%s" % os.path.join(os.path.expanduser("~"), ".local/bin")
-        pybind11.get_include()
-    print("using pybind11 version: ", pybind11.version_info)
-except:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pybind11[global]"])
-    print("using newly installed pybind11 version: ", pybind11.version_info)
+# # -----------------------------
+# # make sure pybind11 is working
+# # -----------------------------
+# try:
+#     import pybind11
+#     # if there is a pybind11 directory locally in this project, it can be imported.
+#     # but that's not the pybind11 package we want
+#     # so check pybind11 package validity further
+#     if os.path.exists("pybind11"):
+#         # see if the truly pybind11 package is installed
+#         os.environ["PATH"] = os.environ["PATH"] + ":%s" % os.path.join(os.path.expanduser("~"), ".local/bin")
+#         pybind11.get_include()
+#     print("using pybind11 version: ", pybind11.version_info)
+# except:
+#     subprocess.check_call([sys.executable, "-m", "pip", "install", "pybind11[global]"])
+#     print("using newly installed pybind11 version: ", pybind11.version_info)
 
 setup(
     name = "atomsciml",

@@ -8,6 +8,8 @@ yum install -y armadillo-devel
 yum install -y atlas-devel blas lapack  # needed for python3.10 to build scipy
 yum install -y yaml-cpp-devel openssl-devel libssh2-devel
 
+pip install --user scikit-build cython pybind11[global]
+
 # the boost-devel in centos 7 is too old
 yum install -y wget xz
 wget -c https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
