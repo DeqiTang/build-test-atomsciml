@@ -8,7 +8,8 @@ yum install -y armadillo-devel
 yum install -y atlas-devel blas lapack  # needed for python3.10 to build scipy
 yum install -y yaml-cpp-devel openssl-devel libssh2-devel
 
-pip install --user scikit-build cython pybind11[global]
+# pip install --user scikit-build cython pybind11[global]
+export PATH=$PATH:${HOME}/.local/bin
 
 # the boost-devel in centos 7 is too old
 yum install -y wget xz

@@ -27,8 +27,8 @@ apt install -y libyaml-cpp-dev libssh2-1 libssh2-1-dev
 # in Debian, the dev and header files for OpenSSL are provided by libssl-dev package
 apt install -y openssl libssl-dev
 
-pip install --user scikit-build cython pybind11[global]
-
+# pip install --user scikit-build cython pybind11[global]
+export PATH=$PATH:${HOME}/.local/bin
 }
 
 function start_build() {
