@@ -2,8 +2,8 @@ function install_dependencies() {
 local PARALLEL_NUM=$1
 yum install -y python3-pip
 yum install -y armadillo-devel 
-yum install -y atlas-devel blas lapack  
-yum install -y yaml-cpp-devel openssl-devel libssh2-devel
+# yum install -y atlas-devel blas lapack  
+yum install -y openssl-devel
 
 yum install -y wget xz
 wget -c https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
