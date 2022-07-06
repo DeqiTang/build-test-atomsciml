@@ -23,7 +23,7 @@ apt install -y libboost-program-options-dev libboost-filesystem-dev libboost-sys
 apt install -y python3-pip
 }
 
-function init_build() {
+function start_build() {
 # so that pybind11 can be detected by scikit-build
 export PATH=$PATH:${HOME}/.local/bin 
 local PARALLEL_NUM=$1
@@ -66,4 +66,4 @@ modify_apt_sources_list
 fi
 
 install_dependencies
-init_build ${PARALLEL_NUM}
+start_build ${PARALLEL_NUM}
