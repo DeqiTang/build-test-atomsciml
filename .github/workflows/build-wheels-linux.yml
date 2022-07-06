@@ -10,7 +10,7 @@ jobs:
   build-wheels-for-linux:
     strategy:
       matrix:
-        manylinux_platform: ["centos", "debian"]
+        manylinux_platform: ["manylinux2014_x86_64", "manylinux_2_24_x86_64"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

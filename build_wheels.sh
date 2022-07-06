@@ -1,11 +1,8 @@
 #!/bin/bash
-# Build and Distribute atomsciml
-# References
-#   https://realpython.com/python-wheels/#different-types-of-wheels
-#   https://github.com/pypa/manylinux
-# Multi Platform Support
 
-function debian_manylinux() {
+# Build and distribute python wheels for atomsciml
+
+function build_on_manylinux_2_24_x86_64() {
 local PARALLEL_NUM=$1
 local WITH_TTY=$2
 local MODIFY_APT_SOURCES=$3
@@ -30,7 +27,7 @@ docker container run -i --rm \
 fi  
 }
 
-function centos_7_manylinux() {
+function build_on_manylinux2014_x86_64() {
 local PARALLEL_NUM=$1
 local WITH_TTY=$2
 #CentOS 7
@@ -82,9 +79,9 @@ echo "With tty -> " ${WITH_TTY}
 echo "Whether to modify apt sources list(if applicable) -> " ${MODIFY_APT_SOURCES}
 
 for build_opt in $RUN_CHOICE;do
-if [[ ${build_opt} == *debian* ]];then
-debian_manylinux ${PARALLEL_NUM} ${WITH_TTY} ${MODIFY_APT_SOURCES}
-elif [[ ${build_opt} == *centos* ]];then
-centos_7_manylinux ${PARALLEL_NUM} ${WITH_TTY}
+if [[ ${build_opt} == *manylinux_2_24_x86_64* ]];then
+build_on_manylinux_2_24_x86_64 ${PARALLEL_NUM} ${WITH_TTY} ${MODIFY_APT_SOURCES}
+elif [[ ${build_opt} == *manylinux2014_x86_64* ]];then
+build_on_manylinux2014_x86_64 ${PARALLEL_NUM} ${WITH_TTY}
 fi
 done
