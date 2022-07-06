@@ -15,21 +15,19 @@ EOF
 function install_dependencies() {
 apt update
 apt install -y libarmadillo-dev 
-apt install -y libboost-all-dev # including atomic filesystem  program-options etc. but may failed to download somtimes
+apt install -y libboost-all-dev 
 apt install -y --fix-missing
-# so we install them individually again
 apt install -y libboost-program-options-dev libboost-filesystem-dev libboost-system-dev
 
 apt install -y libatlas-dev libblas-dev liblapack-dev  # needed for python3.10 to build scipy
-# need working pip3 command
 apt install -y python3-pip
 apt install -y libyaml-cpp-dev libssh2-1 libssh2-1-dev 
-# in Debian, the dev and header files for OpenSSL are provided by libssl-dev package
 apt install -y openssl libssl-dev
 }
 
 function start_build() {
-export PATH=$PATH:${HOME}/.local/bin # so that pybind11 can be detected by scikit-build
+# so that pybind11 can be detected by scikit-build
+export PATH=$PATH:${HOME}/.local/bin 
 local PARALLEL_NUM=$1
 for py in cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
 do
@@ -39,7 +37,7 @@ done
 cd /root/atomsciml/
 for py in cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
 do
-# old build might destroy current build, so remove it
+# previous build might deteriorate the current build
 rm -rf _skbuild
 /opt/python/${py}/bin/python3 setup.py bdist_wheel -j ${PARALLEL_NUM}
 done
