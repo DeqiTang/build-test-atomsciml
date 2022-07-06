@@ -10,6 +10,8 @@ tar -xf boost_1_78_0.tar.gz
 cd boost_1_78_0
 ./bootstrap.sh
 ./b2 install -j ${PARALLEL_NUM} --with-program_options --with-filesystem --with-system
+
+yum install -y libtorch
 }
 
 function start_build() {
