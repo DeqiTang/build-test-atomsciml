@@ -13,7 +13,7 @@ cd boost_1_78_0
 ./b2 install -j ${PARALLEL_NUM} --with-program_options --with-filesystem --with-system
 }
 
-function start_build() {
+function init_build() {
 # so that pybind11 can be detected by scikit-build
 export PATH=$PATH:${HOME}/.local/bin 
 local PARALLEL_NUM=$1
@@ -46,4 +46,4 @@ done
 
 echo ${PARALLEL_NUM}
 install_dependencies ${PARALLEL_NUM}
-start_build ${PARALLEL_NUM}
+init_build ${PARALLEL_NUM}

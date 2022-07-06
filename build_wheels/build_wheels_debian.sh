@@ -4,10 +4,10 @@ cat >/etc/apt/sources.list<<EOF
 deb http://mirrors.aliyun.com/debian stretch main contrib non-free
 deb http://mirrors.aliyun.com/debian stretch-proposed-updates main contrib non-free
 deb http://mirrors.aliyun.com/debian stretch-updates main contrib non-free
+deb http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib
 deb-src http://mirrors.aliyun.com/debian stretch main contrib non-free
 deb-src http://mirrors.aliyun.com/debian stretch-proposed-updates main contrib non-free
 deb-src http://mirrors.aliyun.com/debian stretch-updates main contrib non-free
-deb http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib
 deb-src http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib
 EOF
 }
@@ -23,7 +23,7 @@ apt install -y libboost-program-options-dev libboost-filesystem-dev libboost-sys
 apt install -y python3-pip
 }
 
-function start_build() {
+function init_build() {
 # so that pybind11 can be detected by scikit-build
 export PATH=$PATH:${HOME}/.local/bin 
 local PARALLEL_NUM=$1
@@ -66,4 +66,4 @@ modify_apt_sources_list
 fi
 
 install_dependencies
-start_build ${PARALLEL_NUM}
+init_build ${PARALLEL_NUM}
