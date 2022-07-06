@@ -34,7 +34,6 @@ done
 cd /root/atomsciml/
 for py in cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
 do
-# previous build might deteriorate the current build
 rm -rf _skbuild
 /opt/python/${py}/bin/python3 setup.py bdist_wheel -j ${PARALLEL_NUM}
 done
