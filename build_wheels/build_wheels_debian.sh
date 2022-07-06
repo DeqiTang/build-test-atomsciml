@@ -21,8 +21,8 @@ apt install -y libboost-program-options-dev libboost-filesystem-dev libboost-sys
 
 apt install -y libatlas-dev libblas-dev liblapack-dev  # needed for python3.10 to build scipy
 apt install -y python3-pip
-apt install -y libyaml-cpp-dev libssh2-1 libssh2-1-dev 
-apt install -y openssl libssl-dev
+# apt install -y libyaml-cpp-dev libssh2-1 libssh2-1-dev 
+# apt install -y openssl libssl-dev
 }
 
 function start_build() {
