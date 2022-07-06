@@ -32,7 +32,8 @@ done
 
 for whl in /root/atomsciml/dist/atomsciml-*-linux_*.whl
 do
-auditwheel repair ${whl} --plat $PLAT -w /root/atomsciml/dist
+auditwheel repair ${whl} -w /root/atomsciml/dist
+# --plat $PLATFORM 
 done
 }
 
