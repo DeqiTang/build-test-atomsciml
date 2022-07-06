@@ -13,12 +13,12 @@ if [[ ${WITH_TTY} == *true* ]]; then
 docker container run -it --rm \
       -e PLAT=$PLAT \
       -v "$(pwd)":/root/atomsciml \
-      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_debian.sh -p ${PARALLEL_NUM} -m ${MODIFY_APT_SOURCES}
+      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux_2_24_x86_64.sh -p ${PARALLEL_NUM} -m ${MODIFY_APT_SOURCES}
 else
 docker container run -i --rm \
       -e PLAT=$PLAT \
       -v "$(pwd)":/root/atomsciml \
-      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_debian.sh -p ${PARALLEL_NUM} -m ${MODIFY_APT_SOURCES}
+      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux_2_24_x86_64.sh -p ${PARALLEL_NUM} -m ${MODIFY_APT_SOURCES}
 fi  
 }
 
@@ -32,12 +32,12 @@ if [[ ${WITH_TTY} == *true* ]]; then
 docker container run -it --rm \
       -e PLAT=$PLAT \
       -v "$(pwd)":/root/atomsciml \
-      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_centos7.sh -p ${PARALLEL_NUM}
+      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux2014_x86_64.sh -p ${PARALLEL_NUM}
 else
 docker container run -i --rm \
       -e PLAT=$PLAT \
       -v "$(pwd)":/root/atomsciml \
-      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_centos7.sh -p ${PARALLEL_NUM}
+      "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux2014_x86_64.sh -p ${PARALLEL_NUM}
 fi
 }
 
