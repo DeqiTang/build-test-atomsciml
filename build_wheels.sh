@@ -7,16 +7,13 @@ local PARALLEL_NUM=$1
 local WITH_TTY=$2
 local MODIFY_APT_SOURCES=$3
 DOCKER_IMAGE=quay.io/pypa/manylinux_2_24_x86_64
-# PLATFORM=manylinux_2_24_x86_64
 docker pull "$DOCKER_IMAGE":latest
 if [[ ${WITH_TTY} == *true* ]]; then
 docker container run -it --rm \
-      # -e PLAT=$PLATFORM \
       -v "$(pwd)":/root/atomsciml \
       "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux_2_24_x86_64.sh -p ${PARALLEL_NUM} -m ${MODIFY_APT_SOURCES}
 else
 docker container run -i --rm \
-      # -e PLAT=$PLATFORM \
       -v "$(pwd)":/root/atomsciml \
       "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux_2_24_x86_64.sh -p ${PARALLEL_NUM} -m ${MODIFY_APT_SOURCES}
 fi  
@@ -26,16 +23,13 @@ function build_on_manylinux2014_x86_64() {
 local PARALLEL_NUM=$1
 local WITH_TTY=$2
 DOCKER_IMAGE=quay.io/pypa/manylinux2014_x86_64
-# PLATFORM=manylinux2014_x86_64
 docker pull "$DOCKER_IMAGE":latest
 if [[ ${WITH_TTY} == *true* ]]; then
 docker container run -it --rm \
-      # -e PLATFORM=$PLAT \
       -v "$(pwd)":/root/atomsciml \
       "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux2014_x86_64.sh -p ${PARALLEL_NUM}
 else
 docker container run -i --rm \
-      # -e PLATFORM=$PLATFORM \
       -v "$(pwd)":/root/atomsciml \
       "$DOCKER_IMAGE":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux2014_x86_64.sh -p ${PARALLEL_NUM}
 fi

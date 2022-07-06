@@ -2,7 +2,6 @@ function install_dependencies() {
 local PARALLEL_NUM=$1
 yum install -y python3-pip
 yum install -y armadillo-devel 
-# yum install -y atlas-devel blas lapack  
 yum install -y openssl-devel
 
 yum install -y wget xz
@@ -33,7 +32,6 @@ done
 for whl in /root/atomsciml/dist/atomsciml-*-linux_*.whl
 do
 auditwheel repair ${whl} -w /root/atomsciml/dist
-# --plat $PLATFORM 
 done
 }
 
