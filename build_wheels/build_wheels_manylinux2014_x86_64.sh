@@ -1,3 +1,8 @@
+# ====================================================================
+# this script should be running inside the docker container 
+# manylinux2014_x86_64
+# ====================================================================
+
 yum install -y python3-pip
 yum install -y armadillo-devel 
 yum install -y openssl-devel

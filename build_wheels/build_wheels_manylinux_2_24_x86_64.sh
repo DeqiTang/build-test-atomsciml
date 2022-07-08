@@ -1,3 +1,8 @@
+# ====================================================================
+# this script should be running inside the docker container 
+# manylinux_2_24_x86_64
+# ====================================================================
+
 apt update
 apt install -y python3-pip
 apt install -y libarmadillo-dev 
@@ -17,7 +22,7 @@ cd /root/atomsciml/
 for py in cp37-cp37m cp38-cp38 cp39-cp39 cp310-cp310
 do
 rm -rf _skbuild
-/opt/python/${py}/bin/python3 setup.py bdist_wheel -j 4}
+/opt/python/${py}/bin/python3 setup.py bdist_wheel -j 4
 done
 
 for whl in /root/atomsciml/dist/atomsciml*-linux_*.whl
