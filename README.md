@@ -41,7 +41,7 @@ for third party softwares used in Atomsciml.
 * Pybind11 is licensed under a [BSD style license](https://github.com/pybind/pybind11/blob/master/LICENSE).
 * Pytorch is under a [BSD style](https://github.com/pytorch/pytorch/blob/master/LICENSE) license.
 
-The licenses of the aforementioned third party softwaares are put in the `third_party/license` directory
+The licenses of the aforementioned third party softwares are put in the `third_party/license` directory
 of this project, in text version. Meanwhile, they are included in the `NOTICE` file too.
 
 In addition, the binary distribution of Atomsciml may or may not contain the binaries of the 
