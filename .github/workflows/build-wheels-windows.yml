@@ -101,7 +101,7 @@
 name: Build and test wheels for Windows using MSVC community version
 on:
   push:
-    branches: [ master ]
+    #branches: [ master ]
     tags:
       - 'v*'
   pull_request:

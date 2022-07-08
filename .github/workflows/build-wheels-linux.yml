@@ -16,12 +16,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: build wheels using manylinux docker images
         run: |
-          if [[ "${{ matrix.manylinux_platform }}" == "manylinux_2_24_x86_64"]]; then
+          if [[ "${{ matrix.manylinux_platform }}" == "manylinux_2_24_x86_64"]]
+          then
             docker pull "quay.io/pypa/manylinux_2_24_x86_64":latest
             docker container run -i --rm \
               -v "$(pwd)":/root/atomsciml \
               "quay.io/pypa/manylinux_2_24_x86_64":latest bash /root/atomsciml/build_wheels/build_wheels_manylinux_2_24_x86_64.sh -p 4 -m false
-          elif [[ "${{ matrix.manylinux_platform }}" == "manylinux2014_x86_64"]]; then
+          elif [[ "${{ matrix.manylinux_platform }}" == "manylinux2014_x86_64"]]
+          then
             docker pull "quay.io/pypa/manylinux2014_x86_64":latest
             docker container run -i --rm \
               -v "$(pwd)":/root/atomsciml \
