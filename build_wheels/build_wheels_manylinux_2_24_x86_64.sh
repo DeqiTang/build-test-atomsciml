@@ -15,7 +15,7 @@ apt install -y libtorch
 export PATH=$PATH:${HOME}/.local/bin 
 for py in cp38-cp38 cp39-cp39 cp310-cp310
 do
-/opt/python/${py}/bin/pip3 install --user scikit-build cython pybind11[global]
+/opt/python/${py}/bin/pip3 install --user scikit-build pybind11[global]
 done
 
 cd /root/atomsciml/
