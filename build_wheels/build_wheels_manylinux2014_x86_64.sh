@@ -8,9 +8,9 @@ yum install -y armadillo-devel
 yum install -y openssl-devel
 
 yum install -y wget xz
-wget -c https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
-tar -xf boost_1_78_0.tar.gz
-cd boost_1_78_0
+wget -c https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.gz
+tar -xf boost_1_79_0.tar.gz
+cd boost_1_79_0
 ./bootstrap.sh
 ./b2 install -j 4 --with-program_options --with-filesystem --with-system
 
