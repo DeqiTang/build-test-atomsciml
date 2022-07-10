@@ -11,7 +11,7 @@ wget -c https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1
 tar -xf boost_1_79_0.tar.gz
 cd boost_1_79_0
 ./bootstrap.sh
-./b2 install -j 4 --with-program_options --with-filesystem --with-system
+./b2 install -j 4 --with-filesystem --with-system --with-program_options 
 
 # so that pybind11 can be detected by scikit-build
 export PATH=$PATH:${HOME}/.local/bin 

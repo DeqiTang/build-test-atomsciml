@@ -6,7 +6,7 @@
 apt update
 apt install -y python3-pip
 apt install -y libboost-all-dev 
-apt install -y libboost-program-options-dev libboost-filesystem-dev libboost-system-dev
+apt install -y libboost-filesystem-dev libboost-system-dev libboost-program-options-dev 
 apt install -y libarmadillo-dev 
 apt install -y --fix-missing
 apt install -y libtorch
