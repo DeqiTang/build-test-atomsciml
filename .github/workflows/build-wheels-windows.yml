@@ -3,7 +3,7 @@
 # The eula of Visual Studio Community version is friendly to open source projects.
 # =======================================================================================
 
-name: Build and test wheels for Windows using MSVC community version
+name: Build and test wheels for Windows
 on:
   push:
     branches: [ master ]
@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v3  
         with:
           path: "C:/Program Files/Microsoft Visual Studio/2022/Community"
-          key: ${{ runner.os }}-cache-msvc-community-on-2022.06.21-version-1          
+          key: ${{ runner.os }}-cache-msvc-community-on-2022.07.11-version-1          
       - name: Set up Visual Studio community version
         if: steps.cache-msvc-community.outputs.cache-hit != 'true'
         run: |
