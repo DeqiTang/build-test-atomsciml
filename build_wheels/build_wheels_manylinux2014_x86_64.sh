@@ -1,6 +1,6 @@
 # ====================================================================
-# this script should be running inside the docker container 
-# manylinux2014_x86_64
+# this script should be running inside the manylinux2014_x86_64 
+# docker container
 # ====================================================================
 
 yum install -y python3-pip

@@ -1,6 +1,6 @@
 # ====================================================================
-# this script should be running inside the docker container 
-# manylinux_2_24_x86_64
+# this script should be running inside the manylinux_2_24_x86_64
+# docker container 
 # ====================================================================
 
 apt update

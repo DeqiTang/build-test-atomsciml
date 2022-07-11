@@ -19,7 +19,7 @@ jobs:
         os: [windows-2022]
         python_version: ["3.8", "3.9", "3.10"]
     steps:
-      - name: Caching MSVC Community Version
+      - name: Caching MSVC Community Version 2022
         id: cache-msvc-community
         uses: actions/cache@v3  
         with:
@@ -55,7 +55,8 @@ jobs:
         uses: MarkusJx/install-boost@v2.2.0
         with:
           boost_version: 1.78.0
-          platform_version: 2019
+          # platform_version: 2019
+          platform_version: 2022
           boost_install_dir: "C:/Softwares"
           toolset: msvc
       - name: Install armadillo
