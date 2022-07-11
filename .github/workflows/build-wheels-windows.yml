@@ -54,8 +54,7 @@ jobs:
         id: install-boost
         uses: MarkusJx/install-boost@v2.2.0
         with:
-          boost_version: 1.78.0
-          # platform_version: 2019
+          boost_version: 1.79.0
           platform_version: 2022
           boost_install_dir: "C:/Softwares"
           toolset: msvc
@@ -64,12 +63,12 @@ jobs:
         run: |
           & "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvars64.bat"
           $prefix_ = "C:/Softwares/armadillo"
+          
+          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-11.2.2.tar.xz -OutFile armadillo-11.2.2.tar.xz
+          7z x armadillo-11.2.2.tar.xz
+          tar -xf armadillo-11.2.2.tar
 
-          Invoke-WebRequest -Uri https://jztkft.dl.sourceforge.net/project/arma/armadillo-10.8.2.tar.xz -OutFile armadillo-10.8.2.tar.xz
-          7z x armadillo-10.8.2.tar.xz
-          tar -xf armadillo-10.8.2.tar
-
-          cmake armadillo-10.8.2 -B build_armadillo -G "Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
+          cmake armadillo-11.2.2 -B build_armadillo -G "Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX="${prefix_}" -DCMAKE_BUILD_TYPE=Release
           cmake --build build_armadillo --config Release
           cmake --install build_armadillo
 
