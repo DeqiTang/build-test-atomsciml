@@ -18,17 +18,17 @@ jobs:
         run: |
           if [[ "${{ matrix.manylinux }}" == "manylinux_2_24_x86_64" ]]
           then
-            docker pull "quay.io/pypa/manylinux_2_24_x86_64":latest
+            docker pull quay.io/pypa/manylinux_2_24_x86_64:latest
             docker container run -i --rm \
-              -v "$(pwd)":/root/atomsciml \
-              "quay.io/pypa/manylinux_2_24_x86_64":latest \
+              -v $(pwd):/root/atomsciml \
+              quay.io/pypa/manylinux_2_24_x86_64:latest \
               bash /root/atomsciml/build_wheels/build_wheels_manylinux_2_24_x86_64.sh
           elif [[ "${{ matrix.manylinux }}" == "manylinux2014_x86_64" ]]
           then
-            docker pull "quay.io/pypa/manylinux2014_x86_64":latest
+            docker pull quay.io/pypa/manylinux2014_x86_64:latest
             docker container run -i --rm \
-              -v "$(pwd)":/root/atomsciml \
-              "quay.io/pypa/manylinux2014_x86_64":latest \
+              -v $(pwd):/root/atomsciml \
+              quay.io/pypa/manylinux2014_x86_64:latest \
               bash /root/atomsciml/build_wheels/build_wheels_manylinux2014_x86_64.sh
           fi
       - uses: actions/upload-artifact@v2
