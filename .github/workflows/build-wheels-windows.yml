@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2022]
+        os: [windows-latest]
         python_version: ["3.8", "3.9", "3.10"]
     steps:
       - name: Caching MSVC Community Version 2022
