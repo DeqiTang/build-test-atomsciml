@@ -39,8 +39,7 @@ jobs:
         run: |
           New-Item -Path C:/Softwares -ItemType Directory
           Invoke-WebRequest -Uri https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-with-deps-latest.zip -OutFile C:/Softwares/libtorch-shared-with-deps-latest.zip
-          cd C:/Softwares
-          unzip libtorch-shared-with-deps-latest.zip
+          cd C:/Softwares; unzip libtorch-shared-with-deps-latest.zip
           cd $env:GITHUB_WORKSPACE
 
           $prefix_ = "C:/Softwares/libtorch"
